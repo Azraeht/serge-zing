@@ -1,5 +1,7 @@
 # serge-zing
 
+> Work in progress
+
 A Docker-compose for Serge/Zing stack
 
 This docker-compose stack is based on Serge and Zing which is based on pootle project.
@@ -27,7 +29,15 @@ $ cat .env
 MYSQL_ROOT_PASSWORD=my-db-password
 ```
 
-* Run serge-Zing
+* Run Serge-Zing Stack
 ```
 docker-compose up
+```
+
+### Build local images
+
+* Command `image` and uncomment `build` in docker-compose.yml
+```
+build: ./serge
+#image: azraeht/serge:1.3-xenial
 ```
