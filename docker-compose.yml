@@ -20,7 +20,7 @@ services:
     build: ./zing
     #image: azraeht/zing:0.8.8
     environment:
-      - ZING_DB_ROOT_PASSWORD=rk7b5v7Q4SSRbTSr
+      - ZING_DB_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
     volumes:
       - .data:/data
     depends_on:
@@ -32,7 +32,7 @@ services:
     network_mode: "bridge"
     image: mysql:5.7
     environment:
-      - MYSQL_ROOT_PASSWORD=rk7b5v7Q4SSRbTSr
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
     volumes:
       - ./mysql_data:/var/lib/mysql
 

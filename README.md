@@ -18,19 +18,16 @@ Official documentation:
 ### Run it
 
 * Create a config/serge.conf
-> Got a sample in config directory
+* Create a config/zing.conf
+> Got samples in config directory
+
+* Create a .env file
+```bash
+$ cat .env
+MYSQL_ROOT_PASSWORD=my-db-password
+```
+
 * Run serge-Zing
 ```
 docker-compose up
-```
-
-## Run Serge only
-
-```bash
-docker run -rm -ti
-    -e SERGE_DATA_DIR=/data  # Data directory for serge
-    -v /home/bsantus/workspace/serge-zing/config:/etc/serge # provide configuration file
-    -v /home/bsantus/.ssh:/tmp/.ssh:ro # give it ssh key for git access
-    -v /home/bsantus/temp/data:/data # persistance of data
-    azraeht/serge:1.3 /bin/bash
 ```
