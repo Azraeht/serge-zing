@@ -1,42 +1,44 @@
 version: '3'
 
 services:
-  serge:
-    container_name: serge.server
-    network_mode: "bridge"
-    build: ./serge
-    #image: azraeht/serge:1.3-xenial
+  server:
+    container_name: i18n.server
+    image: azraeht/serge-zing:latest
+    ports: 
+      - 8000:8000
     environment:
       - SERGE_DATA_DIR=/data
-      # - GIT_SERVER_DOMAIN=git.example.com
-    volumes:
-      - ./conf:/etc/serge # Serge configuration
-      - ./data:/data # Persistance for serge data (files and db)
-      # ~/.ssh/:/tmp/.ssh:ro # SSH key mount for non public repo
-
-  zing:
-    container_name: zing.server
-    network_mode: "bridge"
-    build: ./zing
-    #image: azraeht/zing:0.8.8
-    environment:
       - ZING_DB_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - GIT_SERVER_DOMAIN=gitlab.priv.sewan.fr
+      - SERGE_SETTINGS=/etc/serge-zing/serge.conf
+      - ZING_SETTINGS=/etc/serge-zing/zing.conf
     volumes:
-      - .data:/data
+      - ./config:/etc/serge-zing # Serge configuration
+      - ./data:/data # Persistance for serge data (files and db)
+      - ~/.ssh_no_secured:/tmp/.ssh:ro # SSH key mount for non public repo
+    command: zing runserver 0.0.0.0:8000 --insecure
     depends_on:
       - db
       - redis
+    networks: 
+      - default
 
   db:
-    container_name: zing.database
-    network_mode: "bridge"
+    container_name: i18n.db
     image: mysql:5.7
     environment:
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
     volumes:
       - ./mysql_data:/var/lib/mysql
+    networks: 
+      - default
 
   redis:
-    container_name: zing.redis
-    network_mode: "bridge"
+    container_name: i18n.redis
     image: redis:latest
+    networks: 
+      - default
+    
+networks:
+  default:
+    driver: bridge

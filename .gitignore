@@ -1,3 +1,5 @@
 .env
 config/serge.conf
 config/zing.conf
+data
+mysql_data

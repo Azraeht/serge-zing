@@ -38,6 +38,6 @@ docker-compose up
 
 * Command `image` and uncomment `build` in docker-compose.yml
 ```
-build: ./serge
-#image: azraeht/serge:1.3-xenial
+build: ./serge-zing
+#image: azraeht/serge-zing:latest
 ```
