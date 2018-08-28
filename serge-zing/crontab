@@ -1,0 +1,1 @@
+*/5 * * * * serge sync $SERGE_SETTINGS >/var/log/serge.log 2>&1
