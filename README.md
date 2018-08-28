@@ -7,6 +7,7 @@ A Docker-compose for Serge/Zing stack
 This docker-compose stack is based on Serge and Zing which is based on pootle project.
 
 Official documentation:
+
 * **Serge** : https://serge.io/
 * **Zing** : https://evernote.github.io/zing/
 
@@ -24,20 +25,26 @@ Official documentation:
 > Got samples in config directory
 
 * Create a .env file
+
 ```bash
 $ cat .env
 MYSQL_ROOT_PASSWORD=my-db-password
 ```
 
 * Run Serge-Zing Stack
-```
-docker-compose up
+
+```bash
+$ docker-compose up
+Starting i18n.db ... done
+Starting i18n.redis ... done
+Starting i18n.server ... done
 ```
 
 ### Build local images
 
 * Command `image` and uncomment `build` in docker-compose.yml
-```
+
+```yaml
 build: ./serge-zing
 #image: azraeht/serge-zing:latest
 ```

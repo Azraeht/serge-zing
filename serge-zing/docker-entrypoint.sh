@@ -9,9 +9,15 @@ chmod 644 /root/.ssh/id_rsa.pub
 chmod 600 /root/.ssh/id_rsa
 ssh-keyscan -t rsa $GIT_SERVER_DOMAIN >> ~/.ssh/known_hosts
 
+# Create log dirs
+mkdir -p /var/log/zing
+mkdir -p /var/log/serge
+
 # Create DB if it doesn't exits
-echo " - Checking DB state"
+echo " - Checking Zing state"
 mysql -u root -p$ZING_DB_ROOT_PASSWORD -h db -e "CREATE DATABASE IF NOT EXISTS zing CHARACTER SET utf8 COLLATE utf8_general_ci;"
+echo " - Checking Serge state"
+mysql -u root -p$ZING_DB_ROOT_PASSWORD -h db -e "CREATE DATABASE IF NOT EXISTS translations CHARACTER SET utf8 COLLATE utf8_general_ci;"
 
 # Init db
 echo " - Restore Revision"
