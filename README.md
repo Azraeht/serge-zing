@@ -40,6 +40,27 @@ Starting i18n.redis ... done
 Starting i18n.server ... done
 ```
 
+* Create super user
+
+```bash
+$ docker-compose exec server /bin/bash
+root@8ec92977e06e:/# zing createsuperuser --username admin --email se.ci@sewan.fr --noinput
+root@8ec92977e06e:/# zing changepassword admin
+root@8ec92977e06e:/# zing verify_user admin
+```
+
+* Create your project (according to your serge/zing configuration files)
+> Admin -> Projects -> **Add Project**
+
+* Init and sync your project
+
+```bash
+$ docker-compose exec server /bin/bash
+root@8ec92977e06e:/# serge pull --initialize 
+/etc/serge-zing/serge.conf
+root@2536e11da7bf:/# serge sync /etc/serge-zing/serge.conf
+```
+
 ### Build local images
 
 * Command `image` and uncomment `build` in docker-compose.yml

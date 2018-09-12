@@ -13,6 +13,8 @@ ssh-keyscan -t rsa $GIT_SERVER_DOMAIN >> ~/.ssh/known_hosts
 mkdir -p /var/log/zing
 mkdir -p /var/log/serge
 
+# Create temp dir
+mkdir -p /data/po/.tmp
 # Create DB if it doesn't exits
 echo " - Checking Zing state"
 mysql -u root -p$ZING_DB_ROOT_PASSWORD -h db -e "CREATE DATABASE IF NOT EXISTS zing CHARACTER SET utf8 COLLATE utf8_general_ci;"
@@ -21,14 +23,14 @@ mysql -u root -p$ZING_DB_ROOT_PASSWORD -h db -e "CREATE DATABASE IF NOT EXISTS t
 
 # Init db
 echo " - Restore Revision"
-zing revision --restore || true
+zing revision --restore || true 2>/dev/null
 echo " - Init DB"
 zing migrate
 zing initdb
 
 # Restore revision in Redis
 echo " - Restore Revision"
-zing revision --restore || true
+zing revision --restore || true 2>/dev/null
 
 # # Create default data
 echo " - Update Stores"
