@@ -16,7 +16,7 @@ services:
       - ./config:/etc/serge-zing # Serge configuration
       - ./data:/data # Persistance for serge data (files and db)
       - ~/.ssh_no_secured:/tmp/.ssh:ro # SSH key mount for non public repo
-    command: zing runserver 0.0.0.0:8000 --insecure
+    command: cron && zing runserver 0.0.0.0:8000 --insecure
     depends_on:
       - db
       - redis

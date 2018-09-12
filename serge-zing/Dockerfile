@@ -38,7 +38,9 @@ RUN curl -sL https://deb.nodesource.com/setup_8.x | bash - && \
 
 # Add crontab and prepare logs file
 ADD crontab /etc/cron.d/serge-cron
+RUN chmod 0644 /etc/cron.d/serge-cron
 RUN mkdir $SERGE_DATA_DIR && \
+    touch /var/log/cron.log && \
     touch /var/log/serge.log
 # Set entrypoint for managing ssh
 COPY docker-entrypoint.sh /bin/docker-entrypoint.sh
