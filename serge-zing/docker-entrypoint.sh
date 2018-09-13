@@ -9,12 +9,17 @@ chmod 644 /root/.ssh/id_rsa.pub
 chmod 600 /root/.ssh/id_rsa
 ssh-keyscan -t rsa $GIT_SERVER_DOMAIN >> ~/.ssh/known_hosts
 
-# Create log dirs
-mkdir -p /var/log/zing
-mkdir -p /var/log/serge
-
-# Create temp dir
+# Create temp and log dir
 mkdir -p /data/po/.tmp
+mkdir -p /var/log/zing/
+
+# Waiting for db
+until mysql -h db -uroot -p$ZING_DB_ROOT_PASSWORD -e 'exit'; do
+  >&2 echo "Database is unavailable - sleeping"
+  sleep 1
+done
+>&2 echo "Database is up - executing command"
+
 # Create DB if it doesn't exits
 echo " - Checking Zing state"
 mysql -u root -p$ZING_DB_ROOT_PASSWORD -h db -e "CREATE DATABASE IF NOT EXISTS zing CHARACTER SET utf8 COLLATE utf8_general_ci;"

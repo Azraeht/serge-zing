@@ -37,12 +37,12 @@ RUN curl -sL https://deb.nodesource.com/setup_8.x | bash - && \
     pip install MySQL-python==1.2.5
 
 # Add crontab and prepare logs file
-ADD crontab /etc/cron.d/serge-cron
+ADD ./crontab /etc/cron.d/serge-cron
 RUN chmod 0644 /etc/cron.d/serge-cron
 RUN mkdir $SERGE_DATA_DIR && \
     touch /var/log/cron.log && \
     touch /var/log/serge.log
 # Set entrypoint for managing ssh
-COPY docker-entrypoint.sh /bin/docker-entrypoint.sh
+COPY ./docker-entrypoint.sh /bin/docker-entrypoint.sh
 RUN chmod +x /bin/docker-entrypoint.sh
 ENTRYPOINT ["/bin/docker-entrypoint.sh"]
