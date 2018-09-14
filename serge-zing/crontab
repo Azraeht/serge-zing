@@ -1,1 +1,1 @@
-*/5 * * * * serge sync $SERGE_SETTINGS >/var/log/serge.log 2>&1
+* * * * * root export SERGE_DATA_DIR=$SERGE_DATA_DIR && export ZING_SETTINGS=$ZING_SETTINGS && /usr/local/bin/serge sync $SERGE_SETTINGS >> /var/log/serge/sync.log 2>&1

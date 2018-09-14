@@ -15,6 +15,7 @@ services:
     volumes:
       - ./config:/etc/serge-zing # Serge configuration
       - ./data:/data # Persistance for serge data (files and db)
+      - ./logs:/var/log/serge # Logs of sync done by serge
       - ~/.ssh_no_secured:/tmp/.ssh:ro # SSH key mount for non public repo
     depends_on:
       - db

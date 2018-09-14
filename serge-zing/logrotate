@@ -1,0 +1,7 @@
+/var/log/serge/*.log {
+rotate 7
+daily
+compress
+missingok
+nocreate
+}
