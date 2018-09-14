@@ -46,3 +46,4 @@ RUN mkdir $SERGE_DATA_DIR && \
 COPY ./docker-entrypoint.sh /bin/docker-entrypoint.sh
 RUN chmod +x /bin/docker-entrypoint.sh
 ENTRYPOINT ["/bin/docker-entrypoint.sh"]
+CMD ["zing", "runserver", "0.0.0.0:8000", "--insecure"]

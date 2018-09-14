@@ -51,4 +51,8 @@ zing compilejsi18n
 echo " - Start worker"
 zing rqworker &
 
+# Start crontab
+echo " - Start cron sync"
+cron
+
 exec "$@"

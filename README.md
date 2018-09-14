@@ -35,9 +35,9 @@ MYSQL_ROOT_PASSWORD=my-db-password
 
 ```bash
 $ docker-compose up
-Starting i18n.db ... done
-Starting i18n.redis ... done
-Starting i18n.server ... done
+Starting l10n.db ... done
+Starting l10n.redis ... done
+Starting l10n.server ... done
 ```
 
 * Create super user

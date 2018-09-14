@@ -2,7 +2,7 @@ version: '3'
 
 services:
   server:
-    container_name: i18n.server
+    container_name: l10n.server
     image: azraeht/serge-zing:latest
     ports: 
       - 8000:8000
@@ -16,7 +16,6 @@ services:
       - ./config:/etc/serge-zing # Serge configuration
       - ./data:/data # Persistance for serge data (files and db)
       - ~/.ssh_no_secured:/tmp/.ssh:ro # SSH key mount for non public repo
-    command: cron && zing runserver 0.0.0.0:8000 --insecure
     depends_on:
       - db
       - redis
@@ -24,7 +23,7 @@ services:
       - default
 
   db:
-    container_name: i18n.db
+    container_name: l10n.db
     image: mysql:5.7
     environment:
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
@@ -34,7 +33,7 @@ services:
       - default
 
   redis:
-    container_name: i18n.redis
+    container_name: l10n.redis
     image: redis:latest
     networks: 
       - default
