@@ -15,11 +15,13 @@ ENV GIT_SERVER_DOMAIN github.com
 ENV SERGE_DATA_DIR=$serge_data_dir
 # Zing DB root password
 ENV ZING_DB_ROOT_PASSWORD root
+# Start cron for continuous sync
+ENV CONTINUOUS_SYNC false
 
 # Install prerequisites
 RUN apt-get -qq update && \
     apt-get -qq -y install build-essential libssl-dev libexpat-dev wget unzip mysql-client && \
-    apt-get -qq -y install git curl cron
+    apt-get -qq -y install git curl cron logrotate
 # Install serge
 RUN mkdir ~/serge && \
     cd ~/serge && \
@@ -37,12 +39,15 @@ RUN curl -sL https://deb.nodesource.com/setup_8.x | bash - && \
     pip install MySQL-python==1.2.5
 
 # Add crontab and prepare logs file
-ADD ./crontab /etc/cron.d/crontab
-RUN chmod 0644 /etc/cron.d/crontab
-ADD ./logrotate /etc/logrotate.d/logrotate-sync
-RUN chmod 0644 /etc/logrotate.d/logrotate-sync
+ADD ./crontab-sync /etc/cron.d/crontab-sync
+RUN chmod 0644 /etc/cron.d/crontab-sync
+ADD ./logrotate-log /etc/logrotate.d/logrotate-log
+RUN chmod 0644 /etc/logrotate.d/logrotate-log
+ADD ./logrotate /etc/cron.daily/logrotate
+RUN chmod 0644 /etc/cron.daily/logrotate
 RUN mkdir $SERGE_DATA_DIR && \
-    touch /var/log/serge/sync.log
+    mkdir -p /var/log/serge && \
+    crontab /etc/cron.d/crontab-sync
 # Set entrypoint for managing ssh
 COPY ./docker-entrypoint.sh /bin/docker-entrypoint.sh
 RUN chmod +x /bin/docker-entrypoint.sh

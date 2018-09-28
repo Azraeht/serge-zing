@@ -51,8 +51,15 @@ zing compilejsi18n
 echo " - Start worker"
 zing rqworker &
 
-# Start crontab
-echo " - Start cron sync"
-cron
+# Start crontabs
+if [ "$CONTINUOUS_SYNC" = true ] ; then
+    echo " - Start continuous sync"
+    touch /var/log/serge/sync.log
+    crontab /etc/cron.d/crontab-sync
+    cron
+else
+    echo " - Continuous sync off"
+fi
+
 
 exec "$@"
